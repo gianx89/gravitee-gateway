@@ -20,19 +20,15 @@ import io.gravitee.gateway.core.processor.Processor;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * @author David BRASSELY (david.brassely at graviteesource.com)
+ * @author Eric Leleu (eric.leleu at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class TransactionProcessorFactory {
+public class TraceContextProcessorFactory {
 
-    private static final String TRACE_CONTEXT_FORMAT = "trace-context";
-
-    @Value("${handlers.request.transaction.header:" + TransactionProcessor.DEFAULT_TRANSACTION_ID_HEADER + "}")
-    private String transactionHeader;
-    @Value("${handlers.request.request.header:" + TransactionProcessor.DEFAULT_REQUEST_ID_HEADER + "}")
-    private String requestHeader;
+    @Value("${handlers.request.trace-context.enabled:false}")
+    private boolean traceContext;
 
     public Processor<ExecutionContext> create() {
-        return new TransactionProcessor(transactionHeader, requestHeader);
+        return new TraceContextProcessor(traceContext);
     }
 }
